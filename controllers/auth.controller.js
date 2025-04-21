@@ -12,7 +12,10 @@ const responseAPI = {
 
 export const registerUser = async (req, res, next) => {
     try {
-        const { email, password, name } = req.body;
+        const { email, password, name, role } = req.body;
+
+        console.log("Datos recibidos:", { email, password, name, role });  // Verifica que role es 'admin'
+
 
         if (!email || !password || !name) {
             responseAPI.msg = 'Faltan campos requeridos';
@@ -20,6 +23,11 @@ export const registerUser = async (req, res, next) => {
             return res.status(400).json(responseAPI)
         }
 
+        if(password.length > 6){
+            responseAPI.msg= 'La contraseña debe tener al menos 6 caracteres';
+            responseAPI.status= 'error';
+            return res.status(400).json(responseAPI)
+        }
 
         const existingUser = await Usuario.findOne({ email })
 
@@ -44,7 +52,8 @@ export const registerUser = async (req, res, next) => {
         const token = jwt.sign(
             {
                 userId: newUser._id,
-                name: newUser.name
+                name: newUser.name,
+                role: newUser.role
             },
 
             JWT_SECRET,
@@ -59,7 +68,8 @@ export const registerUser = async (req, res, next) => {
             user: {
                 id: newUser._id,
                 name: newUser.name,
-                email: newUser.email
+                email: newUser.email,
+                role: newUser.role
             }
         }
 

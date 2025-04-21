@@ -1,13 +1,17 @@
 import { Router } from "express" //importar libreria
 import authRoutes from './auth.routes.js'
+import adminRoutes from './role.routes.js'
 import {createUsuario, getUsuario, updateUsuario} from "../controllers/usuarios.controller.js"
 
 
 const router = Router()
 
 
-// auth
+// rutas de autentificacion
 router.use('/auth', authRoutes) // rutas de autentificacion... (/api/v1/auth) 
+
+// rutas de roles
+router.use('/admin',authRoutes)
 
 //usuarios
 router.get("/usuarios/:id", getUsuario)
