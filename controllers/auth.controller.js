@@ -34,7 +34,8 @@ export const registerUser = async (req, res, next) => {
         const newUser = new Usuario({
             email,
             password: hashedPassword,
-            name
+            name,
+            role: role || 'user' // user por defecto u otro rol si lo pasa (admin claro)
         });
 
         await newUser.save();
