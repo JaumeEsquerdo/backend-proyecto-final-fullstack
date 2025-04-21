@@ -29,8 +29,6 @@ app.get("/", (req,res)=>{
 // rutas de la API
 app.use("/api/v1", router)
 
-// // para los iconos(que van a ser estáticos) utilizo, archivos dentro de la carpeta public seran accesibles en la URL con prefijo /public 
-// app.use('/public', express.static('public'));
 
 // Puerto
 app.listen(PORT, ()=>{
