@@ -12,8 +12,9 @@ const options = {
 const actividadRecomendacionSchema = new mongoose.Schema({
     titulo: {type: String, required: true},
     descripcion: {type: String, required: true}, 
-    tipo: {type: String, enum: ['cultural','playa','aventura','deporte','gastronomia'] ,required: true}, 
-    icono: {type: String, required:true}, //url o nombre del icono (lo cargo de manera estatica)
+    tipo: {type: String, enum: ['cultural','playa','naturaleza','deporte','gastronomia','ocio'] ,required: true}, 
+    //icono: {type: String, required:true}, 
+    //url o nombre del icono (lo cargo de manera estatica)
 }, options)
 
 export const ActividadRecomendacion = mongoose.model("ActividadRecomendacion", actividadRecomendacionSchema)  //se suele exportar al archivo donde está

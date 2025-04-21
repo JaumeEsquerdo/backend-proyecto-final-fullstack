@@ -11,7 +11,10 @@ const options = {
 
 const packActividadSchema = new mongoose.Schema({
     nombre: {type: String, required: true},
-    icono: {type: String, required: true}, // url del icono
+   tipo:{
+    type: String,
+    enum:["cultural", "playa","naturaleza","deporte", "gastronomia","ocio"]
+   },
     color: {type: String, enum: ['yellow','red','pink','green','brown','purple','blue','orange'] ,required: true},
     actividades:[{type: mongoose.Schema.Types.ObjectId, ref: 'ActividadRecomendacion'}]
     
