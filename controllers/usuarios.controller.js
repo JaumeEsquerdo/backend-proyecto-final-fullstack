@@ -1,4 +1,3 @@
-import { response } from 'express';
 import { Usuario } from '../db/models/usuario.model.js'
 import bcrypt, { hash } from 'bcrypt'
 
@@ -38,7 +37,19 @@ export const createUsuario = async (req, res, next) => {
     const { name, email, password } = req.body
 
     try {
-        const newUser = await Usuario.create({ name, email, passowrd })
+
+        //primero verifico si email ya existe o no
+        const existingUser = await Usuario.findOne({email})
+
+        if(existingUser){
+            responseAPI.msg = "El correo electrónico ya está registroado"
+            responseAPI.status= "error"
+
+            return res.status(400).json(responseAPI)
+        }
+
+
+        const newUser = await Usuario.create({ name, email, password })
 
         responseAPI.msg = 'Usuario creado correctamente'
         responseAPI.data = newUser;
@@ -114,8 +125,8 @@ export const deleteUsuario = async (req, res, next) => {
         }
 
         responseAPI.msg = `usuario con id ${id} eliminado`
-        responseAPI.data = deleteUser
-        reponse.status = 'ok'
+        responseAPI.data = deleteUser;
+        responseAPI.status = 'ok'
 
         res.status(200).json(responseAPI)
     } catch (err) {

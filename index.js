@@ -29,6 +29,11 @@ app.get("/", (req,res)=>{
 // rutas de la API
 app.use("/api/v1", router)
 
+// manejador de errores
+app.use((err, req, res, next)=>{
+    console.error(err)
+    res.status(500).json({msg:'Error  interno del servidor'})
+})
 
 // Puerto
 app.listen(PORT, ()=>{
