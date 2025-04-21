@@ -127,3 +127,28 @@ export const loginUser = async (req, res, next) =>{
         next(err)
     }
 }
+
+export const getCurrentUser = async (req, res, next)=>{
+    try{
+
+        const idUsuario = req.userId;
+
+        const user = await Usuario.findById(idUsuario).select('-password'); //coger todo menos la pass
+        
+        if(!user){
+            responseAPI.status="error";
+            responseAPI.msg = "Usuario no encontrado";
+            return res.status(404).json(responseAPI);
+        }
+
+        responseAPI.status = "ok";
+        responseAPI.msg = "Usuario encontrado correctamente";
+        responseAPI.data = user;
+
+        res.status(200).json(responseAPI)
+    
+    }catch(err){
+        console.error("Error en el getCurrentUser",err)
+        next(err)
+    }
+}
