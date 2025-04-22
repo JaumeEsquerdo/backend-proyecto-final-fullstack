@@ -18,7 +18,7 @@ router.get("/usuarios/:id", getUsuario)
 router.post("/usuarios", createUsuario)
 router.put("/usuarios/:id", updateUsuario)
 router.put("/usuarios/:id/datos", updateUserData)
-router.put("/usuarios/:id/contraseña", updatePassword)
+router.put("/usuarios/:id/password", updatePassword)
 
 
 
