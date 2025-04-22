@@ -74,12 +74,17 @@ export const updateUsuario = async (req, res, next) => {
         const updateData = { name, email }
 
         if (password) {
+            console.log("Recibida nueva contraseña")
             const hashedPassword = await bcrypt.hash(password, 10)
             updateData.password = hashedPassword;
         }
 
-
-
+        if(email){
+            const existingUser = await Usuario.findOne({email});
+            if(existingUser && existingUser._id.toString() !== id){
+                return res.status(400).json({status:'error',msg:'el correo ya esta en uso '})
+            }
+        }
 
 
         const updateUser = await Usuario.findByIdAndUpdate(
@@ -110,7 +115,81 @@ export const updateUsuario = async (req, res, next) => {
         next(err)
     }
 }
+export const updateUserData = async (req, res, next) =>{
+    const {id} = req.params;
+    const {name, email} = req.body
 
+
+    try{
+        const updateData= {name, email};
+
+        if(email){
+            const existingUser = await Usuario.findOne({email});
+            if(existingUser && existingUser._id.toString() !== id){
+                responseAPI.status = 'error';
+                responseAPI.msg = 'El correo ya está en uso';
+                return res.status(400).json(responseAPI);
+            }
+        }
+
+        const updateUser = await Usuario.findByIdAndUpdate(id, updateData, {new:true});
+    
+        if(!updateUser){
+            responseAPI.status='error';
+            responseAPI.msg='usuario no encontrado';
+            return res.status(404).json(responseAPI)
+        }
+        responseAPI.status="ok";
+        responseAPI.msg="Usuario actualizado";
+        responseAPI.data={
+            id:updateUser._id,
+            name:updateUser.name,
+            email:updateUser.email
+        }
+
+        res.status(200).json(responseAPI)
+    }catch(err){
+        console.error(err)
+        next(err)
+    }
+}
+
+//actualizar solo contraseña
+export const updatePassword = async (req, res, next)=>{
+    const {id} = req.params;
+    const {oldPassword, newPassword} = req.body;
+
+    try{
+        const user = await Usuario.findById(id);
+        if (!user) {
+            responseAPI.status = 'error';
+            responseAPI.msg = 'Usuario no encontrado';
+            return res.status(404).json(responseAPI);
+        }
+        
+        // comparar la actual con la gaurdada
+        const passwordMatch = await bcrypt.compare(oldPassword, user.password);
+        if(!passwordMatch){
+            responseAPI.status= 'error';
+            responseAPI.msg='contraseña actual no es correcta'
+            return res.status(400).json(responseAPI)
+        }
+
+        //encriptar nueva contraseña
+        const hashedPassword = await bcrypt.hash(newPassword,10);
+        user.password=hashedPassword;
+
+        await user.save();
+
+        responseAPI.status= 'ok';
+        responseAPI.msg = 'contraseña actualizada correctamente'
+
+        res.status(200).json(responseAPI)
+    }catch(e){
+        console.error('Error al actualizar la contraseña', e);
+        next(e);
+    }
+}
 // eliminar usuario
 export const deleteUsuario = async (req, res, next) => {
     const { id } = req.params;

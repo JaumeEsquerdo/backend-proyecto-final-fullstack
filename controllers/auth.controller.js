@@ -23,7 +23,7 @@ export const registerUser = async (req, res, next) => {
             return res.status(400).json(responseAPI)
         }
 
-        if(password.length > 6){
+        if(password.length < 6){
             responseAPI.msg= 'La contraseña debe tener al menos 6 caracteres';
             responseAPI.status= 'error';
             return res.status(400).json(responseAPI)
@@ -142,7 +142,7 @@ export const loginUser = async (req, res, next) =>{
 export const getCurrentUser = async (req, res, next)=>{
     try{
 
-        const idUsuario = req.userId;
+        const idUsuario = req.user.userId;
 
         const user = await Usuario.findById(idUsuario).select('-password'); //coger todo menos la pass
         
