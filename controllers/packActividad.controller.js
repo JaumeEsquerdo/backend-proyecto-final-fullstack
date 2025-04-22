@@ -12,6 +12,12 @@ export const createPack = async (req, res, next) => {
     const { nombre, tipo, color, actividades } = req.body;
 
     try {
+        if(actividades.length > 5){
+            responseAPI.msg = 'no puedes añadir mas de 5 actividades en un pack'
+            responseAPI.status= 'error'
+            return res.status(400).json(responseAPI)
+        }
+        
         const nuevoPack = await PackActividad.create({ nombre, tipo, color, actividades });
 
         responseAPI.msg = 'pack creado correctamente';

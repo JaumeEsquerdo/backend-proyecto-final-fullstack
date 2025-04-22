@@ -8,14 +8,14 @@ const router = Router();
 
 
 // rutas publicas
-router.get("/packs", getPacks);
-router.get("/packs/:id", getPackById);
+router.get("/", getPacks);
+router.get("/:id", getPackById);
 
 
 //Rutas protegidas para admin
-router.post("/packs", authMiddleWare, isAdmin, createPack);
-router.delete("/packs/:id", authMiddleWare, isAdmin, deletePack);
-router.put("/packs/:id", authMiddleWare, isAdmin, updatePack);
+router.post("/", authMiddleWare, isAdmin, createPack);
+router.delete("/:id", authMiddleWare, isAdmin, deletePack);
+router.put("/:id", authMiddleWare, isAdmin, updatePack);
 
 
 
