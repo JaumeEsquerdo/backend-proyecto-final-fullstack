@@ -6,6 +6,11 @@ import {isAdmin} from '../middleware/role.middleware.js'
 
 const router = Router();
 
+// esta es la ruta publica para leer una actividad por id: /api/v1/recomendaciones/public/:id
+router.get("/public", getRecomendaciones) // ruta publica para leer todas las actividades desde la home
+router.get("/public/:id", getRecomendacionById)  // ruta publica para obtener recomendacion por id
+
+
 //proteger todas las rutas: solo accedes con admin autentificado
 router.use(authMiddleWare, isAdmin);
 

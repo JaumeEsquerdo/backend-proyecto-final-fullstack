@@ -10,14 +10,14 @@ const options = {
 }
 
 const packActividadSchema = new mongoose.Schema({
-    nombre: {type: String, required: true},
-   tipo:{
-    type: String,
-    enum:["cultural", "playa","naturaleza","deporte", "gastronomia","ocio"]
-   },
-    color: {type: String, enum: ['yellow','red','pink','green','brown','purple','blue','orange'] ,required: true},
-    actividades:[{type: mongoose.Schema.Types.ObjectId, ref: 'ActividadRecomendacion'}]
-    
+    nombre: { type: String, required: true },
+    tipo: {
+        type: String,
+        enum: ["cultural", "playa", "naturaleza", "deporte", "gastronomia", "ocio"]
+    },
+    color: { type: String, enum: ['yellow', 'red', 'pink', 'green', 'brown', 'purple', 'blue', 'orange'], required: true },
+    actividades: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ActividadRecomendacion' }]
+
 }, options)
 
 export const PackActividad = mongoose.model("PackActividad", packActividadSchema)  //se suele exportar al archivo donde está

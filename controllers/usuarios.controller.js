@@ -39,11 +39,11 @@ export const createUsuario = async (req, res, next) => {
     try {
 
         //primero verifico si email ya existe o no
-        const existingUser = await Usuario.findOne({email})
+        const existingUser = await Usuario.findOne({ email })
 
-        if(existingUser){
+        if (existingUser) {
             responseAPI.msg = "El correo electrónico ya está registroado"
-            responseAPI.status= "error"
+            responseAPI.status = "error"
 
             return res.status(400).json(responseAPI)
         }
@@ -79,10 +79,10 @@ export const updateUsuario = async (req, res, next) => {
             updateData.password = hashedPassword;
         }
 
-        if(email){
-            const existingUser = await Usuario.findOne({email});
-            if(existingUser && existingUser._id.toString() !== id){
-                return res.status(400).json({status:'error',msg:'el correo ya esta en uso '})
+        if (email) {
+            const existingUser = await Usuario.findOne({ email });
+            if (existingUser && existingUser._id.toString() !== id) {
+                return res.status(400).json({ status: 'error', msg: 'el correo ya esta en uso ' })
             }
         }
 
@@ -115,77 +115,77 @@ export const updateUsuario = async (req, res, next) => {
         next(err)
     }
 }
-export const updateUserData = async (req, res, next) =>{
-    const {id} = req.params;
-    const {name, email} = req.body
+export const updateUserData = async (req, res, next) => {
+    const { id } = req.params;
+    const { name, email } = req.body
 
 
-    try{
-        const updateData= {name, email};
+    try {
+        const updateData = { name, email };
 
-        if(email){
-            const existingUser = await Usuario.findOne({email});
-            if(existingUser && existingUser._id.toString() !== id){
+        if (email) {
+            const existingUser = await Usuario.findOne({ email });
+            if (existingUser && existingUser._id.toString() !== id) {
                 responseAPI.status = 'error';
                 responseAPI.msg = 'El correo ya está en uso';
                 return res.status(400).json(responseAPI);
             }
         }
 
-        const updateUser = await Usuario.findByIdAndUpdate(id, updateData, {new:true});
-    
-        if(!updateUser){
-            responseAPI.status='error';
-            responseAPI.msg='usuario no encontrado';
+        const updateUser = await Usuario.findByIdAndUpdate(id, updateData, { new: true });
+
+        if (!updateUser) {
+            responseAPI.status = 'error';
+            responseAPI.msg = 'usuario no encontrado';
             return res.status(404).json(responseAPI)
         }
-        responseAPI.status="ok";
-        responseAPI.msg="Usuario actualizado";
-        responseAPI.data={
-            id:updateUser._id,
-            name:updateUser.name,
-            email:updateUser.email
+        responseAPI.status = "ok";
+        responseAPI.msg = "Usuario actualizado";
+        responseAPI.data = {
+            id: updateUser._id,
+            name: updateUser.name,
+            email: updateUser.email
         }
 
         res.status(200).json(responseAPI)
-    }catch(err){
+    } catch (err) {
         console.error(err)
         next(err)
     }
 }
 
 //actualizar solo contraseña
-export const updatePassword = async (req, res, next)=>{
-    const {id} = req.params;
-    const {oldPassword, newPassword} = req.body;
+export const updatePassword = async (req, res, next) => {
+    const { id } = req.params;
+    const { oldPassword, newPassword } = req.body;
 
-    try{
+    try {
         const user = await Usuario.findById(id);
         if (!user) {
             responseAPI.status = 'error';
             responseAPI.msg = 'Usuario no encontrado';
             return res.status(404).json(responseAPI);
         }
-        
+
         // comparar la actual con la gaurdada
         const passwordMatch = await bcrypt.compare(oldPassword, user.password);
-        if(!passwordMatch){
-            responseAPI.status= 'error';
-            responseAPI.msg='contraseña actual no es correcta'
+        if (!passwordMatch) {
+            responseAPI.status = 'error';
+            responseAPI.msg = 'contraseña actual no es correcta'
             return res.status(400).json(responseAPI)
         }
 
         //encriptar nueva contraseña
-        const hashedPassword = await bcrypt.hash(newPassword,10);
-        user.password=hashedPassword;
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        user.password = hashedPassword;
 
         await user.save();
 
-        responseAPI.status= 'ok';
+        responseAPI.status = 'ok';
         responseAPI.msg = 'contraseña actualizada correctamente'
 
         res.status(200).json(responseAPI)
-    }catch(e){
+    } catch (e) {
         console.error('Error al actualizar la contraseña', e);
         next(e);
     }
@@ -211,5 +211,34 @@ export const deleteUsuario = async (req, res, next) => {
     } catch (err) {
         console.error('error en deleteusuario', err)
         next(err)
+    }
+}
+
+//funciión para asignar un rol de admin a un usuario
+export const asignarRolAdmin = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const usuario = await Usuario.findById(id)
+
+        if (!usuario) {
+            responseAPI.msg = `no se ha encontrado usuario con id ${id}`;
+            responseAPI.status = 'error';
+            return res.status(404).json(responseAPI)
+        }
+
+        usuario.role = 'admin';
+        await usuario.save();
+
+        responseAPI.msg = `rol de admin asignado al id ${id}`;
+        responseAPI.status = 'ok';
+        responseAPI.data = usuario;
+
+        return res.status(200).json(responseAPI)
+
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ msg: 'error al asignar rol d admin' })
     }
 }
