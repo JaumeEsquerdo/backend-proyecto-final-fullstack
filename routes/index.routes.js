@@ -36,11 +36,14 @@ router.delete("/actividades/:id", deleteActividad)
 // rutas para gestion de actividades recomendadas de gestion rol 'admin' /api/v1/recomendaciones
 router.use('/recomendaciones', recomendacionRoutes) 
 
+// rutas de packs recomendadas
+router.use('/packs', PackRoutes)
+
+
 //rutas protegias con auth y accesible paara admin
 router.put("/usuarios/:id/admin", authMiddleWare, asignarRolAdmin)
 
-// rutas de packs recomendadas
-router.use('/packs', PackRoutes)
+
 
 
 
