@@ -2,12 +2,12 @@
 @uid=1
 
 ### update usuario
-PUT {{dominio}}/api/v1/usuarios
+POST {{dominio}}/api/v1/auth/login
 Content-Type: application/json
 
 {
-    "nombre": "Jaume",
-    "email": "jaume@gmail.es"
+    "email": "admin2@admin2.es",
+    "password": "admin2"
 }
 
 ### get usuario
@@ -19,9 +19,7 @@ POST {{dominio}}/api/v1/usuarios
 Content-Type: application/json
 
 {
-    "name": "prueba1",
-    "email": "email@pruebaAdmin5.es",
-    "password": "1234",
-    "role": "admin"
-    
+    "name": "admin1",
+    "email": "email@admin1.es",
+    "password": "12345678"
 }
