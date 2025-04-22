@@ -1,4 +1,4 @@
-import { Actividad } from "../db/models/actividad.model"
+import { Actividad } from "../db/models/actividad.model.js"
 
 const responseAPI = {
     msg: "",
