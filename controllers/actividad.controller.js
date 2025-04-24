@@ -1,4 +1,5 @@
 import { Actividad } from "../db/models/actividad.model.js"
+import { Usuario } from "../db/models/usuario.model.js";
 
 const responseAPI = {
     msg: "",
@@ -10,10 +11,10 @@ const responseAPI = {
 export const createActividad = async (req, res, next) =>{
     const {title, time, timeExact, displayHours, description} = req.body;
 
-    const user = req.user?.userId; //obtengo el user del token, segun lo guardo en auth.middleware.js
-    console.log('usuario en back:', user)
-    
-    if(!title || !time || !timeExact || !user){
+    const userId = req.user?.userId; //obtengo el user del token, segun lo guardo en auth.middleware.js
+    console.log('usuario en back:', userId)
+
+    if(!title || !time || !timeExact || !userId){
         responseAPI.msg = 'faltan campos (title, time, timeExact o user)'
         responseAPI.status = 'error'
         return res.status(400).json(responseAPI)
@@ -28,8 +29,12 @@ export const createActividad = async (req, res, next) =>{
             timeExact,
             displayHours,
             description,
-            user
+            user: userId
         })
+  console.log('Actividad creada:', nuevaActividad); // Verifica la actividad creada
+        const user = await Usuario.findById(userId)
+        user.actividades.push(nuevaActividad._id) //agrega el id de la actividad al array de actividades
+        await user.save() 
 
         responseAPI.msg = 'Actividad creada correctamenet';
         responseAPI.data = nuevaActividad;
