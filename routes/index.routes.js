@@ -2,7 +2,7 @@ import { Router } from "express" //importar libreria
 import authRoutes from './auth.routes.js'
 import adminRoutes from './role.routes.js'
 import {asignarRolAdmin, createUsuario, getUsuario, updatePassword, updateUserData, updateUsuario} from "../controllers/usuarios.controller.js"
-import { createActividad, getActividades, getActividadById, updateActividad, deleteActividad } from "../controllers/actividad.controller.js"
+import { createActividad, getActividades, getActividadById, updateActividad, deleteActividad, getUserActivities } from "../controllers/actividad.controller.js"
 import recomendacionRoutes from './recomendaciones.routes.js'
 import PackRoutes from './pack.routes.js'
 import { authMiddleWare } from "../middleware/auth.middleware.js"
@@ -25,6 +25,7 @@ router.put("/usuarios/:id/datos", updateUserData)
 router.put("/usuarios/:id/password", updatePassword)
 
 // rutas de actividades en calendario
+router.get("/actividades/user", authMiddleWare, getUserActivities) // obtener las actividades del usuraio
 router.post("/actividades",authMiddleWare, createActividad) //crear nueva actividad
 router.get("/actividades", getActividades) // obtener todas
 router.get("/actividades/:id", getActividadById) //obtener una actividad por ID

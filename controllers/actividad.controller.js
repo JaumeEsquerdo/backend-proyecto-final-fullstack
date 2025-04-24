@@ -150,3 +150,27 @@ export const deleteActividad = async (req , res, next) =>{
         next(err);
     }
 }
+
+// obtener actividades del usuer autentificado!! IMPORTANTE
+export const getUserActivities = async (req , res,next) =>{
+    try{
+        const userId = req.user?.userId;
+
+        if(!userId){
+            responseAPI.msg='No autorizado';
+            responseAPI.status='error';
+            return res.status(401).json(responseAPI)
+        }
+
+        const actividades = await Actividad.find({user: userId}).sort({time:1})
+
+        responseAPI.msg = 'Actividades del usuario obtenidas correctamente';
+        responseAPI.status = 'ok';
+        responseAPI.data = actividades;
+
+        res.status(200).json(responseAPI)
+    }catch(err){
+        console.error('error al obtener actividades del usuario', err)
+        next(err);
+    }
+}
