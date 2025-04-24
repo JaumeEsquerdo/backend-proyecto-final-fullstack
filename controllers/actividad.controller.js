@@ -8,13 +8,18 @@ const responseAPI = {
 }
 
 export const createActividad = async (req, res, next) =>{
-    const {title, time, timeExact, displayHours, description, user} = req.body;
+    const {title, time, timeExact, displayHours, description} = req.body;
+
+    const user = req.user?.userId; //obtengo el user del token, segun lo guardo en auth.middleware.js
+    console.log('usuario en back:', user)
     
     if(!title || !time || !timeExact || !user){
         responseAPI.msg = 'faltan campos (title, time, timeExact o user)'
         responseAPI.status = 'error'
         return res.status(400).json(responseAPI)
     }
+
+
 
     try{
         const nuevaActividad = await Actividad.create({

@@ -25,7 +25,7 @@ router.put("/usuarios/:id/datos", updateUserData)
 router.put("/usuarios/:id/password", updatePassword)
 
 // rutas de actividades en calendario
-router.post("/actividades", createActividad) //crear nueva actividad
+router.post("/actividades",authMiddleWare, createActividad) //crear nueva actividad
 router.get("/actividades", getActividades) // obtener todas
 router.get("/actividades/:id", getActividadById) //obtener una actividad por ID
 router.put("/actividades/:id", updateActividad)

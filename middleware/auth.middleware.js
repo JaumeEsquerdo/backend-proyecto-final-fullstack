@@ -13,6 +13,8 @@ export const authMiddleWare = (req, res, next) => {
     try {
         // verificar el token
         const decoded = jwt.verify(token, JWT_SECRET);
+        console.log('Token decodificado:', decoded); // Verificar el contenido del token
+
         req.user =
         {
             userId: decoded.userId,
