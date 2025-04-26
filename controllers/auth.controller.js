@@ -23,9 +23,9 @@ export const registerUser = async (req, res, next) => {
             return res.status(400).json(responseAPI)
         }
 
-        if(password.length < 6){
-            responseAPI.msg= 'La contraseña debe tener al menos 6 caracteres';
-            responseAPI.status= 'error';
+        if (password.length < 6) {
+            responseAPI.msg = 'La contraseña debe tener al menos 6 caracteres';
+            responseAPI.status = 'error';
             return res.status(400).json(responseAPI)
         }
 
@@ -82,20 +82,20 @@ export const registerUser = async (req, res, next) => {
 }
 
 
-export const loginUser = async (req, res, next) =>{
-    try{
+export const loginUser = async (req, res, next) => {
+    try {
 
-        const {email, password} = req.body;
+        const { email, password } = req.body;
 
-        if(!email || !password){
-            responseAPI.msg= " Email y contraseña son obligatorias"
-            responseAPI.status= 'Error'
+        if (!email || !password) {
+            responseAPI.msg = " Email y contraseña son obligatorias"
+            responseAPI.status = 'Error'
             return res.status(400).json(responseAPI)
         }
 
-        const existingUser = await Usuario.findOne({email});
+        const existingUser = await Usuario.findOne({ email });
 
-        if(!existingUser){
+        if (!existingUser) {
             responseAPI.msg = "Email o contraseña inválidos";
             responseAPI.status = "error";
             return res.status(401).json(responseAPI)
@@ -104,7 +104,7 @@ export const loginUser = async (req, res, next) =>{
         // Comparar password encriptada
         const isPasswrodValid = await bcrypt.compare(password, existingUser.password)
 
-        if(!isPasswrodValid){
+        if (!isPasswrodValid) {
             responseAPI.msg = "Email o contraseña inválidos";
             responseAPI.status = "error";
             return res.status(401).json(responseAPI)
@@ -118,14 +118,14 @@ export const loginUser = async (req, res, next) =>{
                 role: existingUser.role
             },
             JWT_SECRET,
-            {expiresIn: '3h'}
+            { expiresIn: '3h' }
         );
 
         responseAPI.msg = 'Usuario logueado correctamente';
         responseAPI.status = "ok";
         responseAPI.data = {
             token,
-            user:{
+            user: {
                 id: existingUser._id,
                 name: existingUser.name,
                 email: existingUser.email,
@@ -136,21 +136,21 @@ export const loginUser = async (req, res, next) =>{
 
         res.status(200).json(responseAPI)
 
-    }catch(err){
+    } catch (err) {
         console.error('Error en el loginUser', err)
         next(err)
     }
 }
 
-export const getCurrentUser = async (req, res, next)=>{
-    try{
+export const getCurrentUser = async (req, res, next) => {
+    try {
 
         const idUsuario = req.user.userId;
 
         const user = await Usuario.findById(idUsuario).select('-password'); //coger todo menos la pass
-        
-        if(!user){
-            responseAPI.status="error";
+
+        if (!user) {
+            responseAPI.status = "error";
             responseAPI.msg = "Usuario no encontrado";
             return res.status(404).json(responseAPI);
         }
@@ -160,9 +160,9 @@ export const getCurrentUser = async (req, res, next)=>{
         responseAPI.data = user;
 
         res.status(200).json(responseAPI)
-    
-    }catch(err){
-        console.error("Error en el getCurrentUser",err)
+
+    } catch (err) {
+        console.error("Error en el getCurrentUser", err)
         next(err)
     }
 }
