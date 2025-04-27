@@ -7,24 +7,25 @@ const options = {
         locale: "es", // config para el idioma que sea español
         strength: 1 //nivel de comparación de strings( 1: ignorar mayúsculas, minúsculas y tildes)
     },
-    timestamps:true
+    timestamps: true
 }
 
 const usuarioSchema = new mongoose.Schema({
-    name: {type: String, required: true},
-    email: {type: String, required: true, unique: true},
-    password: {type: String, required: true},
-    role: {type: String,
-        enum:["user","admin"],
-        default:'user'
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    role: {
+        type: String,
+        enum: ["user", "admin"],
+        default: 'user'
 
     },
 
-    actividades:[{
+    actividades: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Actividad'
     }]
-    
+
 
 }, options)
 

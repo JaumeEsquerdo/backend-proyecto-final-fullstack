@@ -12,7 +12,7 @@ export const createActividad = async (req, res, next) => {
     const { title, time, timeExact, displayHours, description } = req.body;
 
     const userId = req.user?.userId; //obtengo el user del token, segun lo guardo en auth.middleware.js
-    console.log('usuario en back:', userId)
+    // console.log('usuario en back:', userId)
 
     if (!title || !time || !timeExact || !userId) {
         responseAPI.msg = 'faltan campos (title, time, timeExact o user)'
@@ -31,7 +31,7 @@ export const createActividad = async (req, res, next) => {
             description,
             user: userId
         })
-        console.log('Actividad creada:', nuevaActividad); // Verifica la actividad creada
+        // console.log('Actividad creada:', nuevaActividad); // Verifica la actividad creada
         const user = await Usuario.findById(userId)
         user.actividades.push(nuevaActividad._id) //agrega el id de la actividad al array de actividades
         await user.save()

@@ -74,7 +74,7 @@ export const updateUsuario = async (req, res, next) => {
         const updateData = { name, email }
 
         if (password) {
-            console.log("Recibida nueva contraseña")
+            // console.log("Recibida nueva contraseña")
             const hashedPassword = await bcrypt.hash(password, 10)
             updateData.password = hashedPassword;
         }

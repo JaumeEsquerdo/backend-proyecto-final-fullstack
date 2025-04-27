@@ -13,7 +13,7 @@ export const authMiddleWare = (req, res, next) => {
     try {
         // verificar el token
         const decoded = jwt.verify(token, JWT_SECRET);
-        console.log('Token decodificado:', decoded); // Verificar el contenido del token
+        // console.log('Token decodificado:', decoded); // Verificar el contenido del token
 
         req.user =
         {
@@ -26,7 +26,7 @@ export const authMiddleWare = (req, res, next) => {
         // req.userId se obtiene del token descifrado y solo existe durante la petición. No se almacena en el token ni en la base de datos.
 
 
-    } catch(err) {
+    } catch (err) {
         console.error("error en el token", err)
         res.status(401).json({ message: "Acceso denegado. Token inválido o expirado" })
     }

@@ -14,7 +14,7 @@ export const registerUser = async (req, res, next) => {
     try {
         const { email, password, name, role } = req.body;
 
-        console.log("Datos recibidos:", { email, password, name, role });  // Verifica que role es 'admin'
+        // console.log("Datos recibidos:", { email, password, name, role });  // Verifica que role es 'admin'
 
 
         if (!email || !password || !name) {
