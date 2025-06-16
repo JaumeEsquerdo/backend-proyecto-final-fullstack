@@ -37,5 +37,5 @@ app.use((err, req, res, next) => {
 
 // Puerto
 app.listen(PORT, () => {
-    // console.log(`Servidor funcionando en ${DOMAIN}:${PORT}`)
+    console.log(`Servidor funcionando en ${DOMAIN}:${PORT}`)
 })
