@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/JaumeEsquerdo/backend-proyecto-final-fullstack-#readme",
   "devDependencies": {
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.10"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
