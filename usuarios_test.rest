@@ -20,7 +20,8 @@ POST {{dominio}}/api/v1/usuarios
 Content-Type: application/json
 
 {
-    "name": "user3",
+    "name": "userAdmin",
     "email": "email@admin3.es",
-    "password": "123456789"
+    "password": "123456789",
+    "role" : "admin"
 }
