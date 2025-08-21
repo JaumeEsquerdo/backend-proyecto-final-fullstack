@@ -51,6 +51,6 @@ export default app;
 
 
 // Puerto PARA LOCAL
-// app.listen(PORT, () => {
-//     console.log(`Servidor funcionando en ${DOMAIN}:${PORT}`)
-// })
+app.listen(PORT, () => {
+    console.log(`Servidor funcionando en ${DOMAIN}:${PORT}`)
+})
