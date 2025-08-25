@@ -1,6 +1,6 @@
 # 🏛 Proyecto Final Fullstack CEI — Backend (API)
 
-Backend del proyecto final del módulo FullStack en CEI Valencia para el funcionamiento de la app `Turistea Villajoyosa`: la app muestra en la home actividades recomendadas en Villajoyosa y permite al usuario añadir también sus propias actividades a un calendario personalizado.
+Backend del proyecto `Turistea Villajoyosa`, desarrollado como proyecto final del módulo FullStack en CEI Valencia. Proporciona la API que gestiona usuarios, actividades recomendadas, packs y actividades personalizadas del calendario.
 
 - API para la app del Proyecto Final Fullstack: gestión de usuarios y actividades.
 Despliegue: https://backend-proyecto-final-fullstack.vercel.app
@@ -9,7 +9,7 @@ Repo: https://github.com/JaumeEsquerdo/backend-proyecto-final-fullstack
 
 ## 📖 Descripción
 
-CRUD de usuarios, actividades guardaddas, actividades recomendadas y pack de actividades.
+CRUD de usuarios, actividades guardadas, actividades recomendadas y pack de actividades.
 
 Autenticación mediante JWT.
 
@@ -32,7 +32,7 @@ El archivo .env.copy incluye la estructura necesaria (puerto, conexión a DB, cl
 npm install
 npm run dev      // local
 ```
-- Y descomentar en index.js
+- Y descomentar en index.js solo para arrancarlo en local.  Para el despliegue en Vercel, debe mantenerse exportado (sin `listen`).
 ```js
 // Puerto PARA LOCAL
 // app.listen(PORT, () => {
