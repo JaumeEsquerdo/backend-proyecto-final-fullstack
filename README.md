@@ -31,6 +31,13 @@ El archivo .env.copy incluye la estructura necesaria (puerto, conexión a DB, cl
 npm install
 npm run dev      // local
 ```
+- Y descomentar en index.js
+```js
+// Puerto PARA LOCAL
+// app.listen(PORT, () => {
+//     console.log(`Servidor funcionando en ${DOMAIN}:${PORT}`)
+// })
+```
 
 ## Autor
 
