@@ -21,7 +21,7 @@ Despliegue en Vercel.
 
 ## 🧱 Tech stack
 
-Node.js · Express · MongoDB/Mongoose · JWT · Multer · Dotenv · CORS
+Back: Node.js + Express + MongoDB/Mongoose (API) + JWT  Multer + Dotenv + CORS
 
 ## 🔑 Variables de entorno
 
