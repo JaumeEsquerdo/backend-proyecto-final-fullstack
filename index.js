@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true })); // nos permite leer datos desde
 console.clear();
 app.get("/", (req, res) => {
   res.send(
-    'Bienvenidos a mi API de gestión de actividades para "Turistea Villajoyosa"'
+    'Bienvenidos a mi API de gestión de actividades para "Turistea Villajoyosa"',
   );
 });
 /* middleware para asegurar que antes de cada request exista una conexión válida */
@@ -47,6 +47,6 @@ app.use((err, req, res, next) => {
 export default app;
 
 // Puerto PARA LOCAL
-// app.listen(PORT, () => {
-//   console.log(`Servidor funcionando en ${DOMAIN}:${PORT}`);
-// });
+app.listen(PORT, () => {
+  console.log(`Servidor funcionando en ${DOMAIN}:${PORT}`);
+});
